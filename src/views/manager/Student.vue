@@ -20,7 +20,11 @@
         <el-table-column label="邮箱" prop="email"></el-table-column>
         <el-table-column label="性别" prop="sex"></el-table-column>
         <el-table-column label="生日" prop="birth"></el-table-column>
-        <el-table-column label="头像" prop="avatar"></el-table-column>
+        <el-table-column label="头像" prop="avatar">
+          <template #default="scope">
+            <el-image v-if="scope.row.avatar" :src="scope.row.avatar" fit="cover" style="width: 40px; height: 40px; border-radius: 5px"></el-image>
+          </template>
+        </el-table-column>
         <el-table-column label="操作" align="center" width="160">
           <template v-slot="scope">
             <el-button type="primary" @click="handleEdit(scope.row)">编辑</el-button>
@@ -36,7 +40,7 @@
                       background layout="prev, pager, next" :total="data.total"/>
     </div>
 //添加的弹窗
-    <el-dialog title="学生信息" width="40%" v-model="data.formVisible">
+    <el-dialog title="学生信息" width="40%" v-model="data.formVisible" destory-on-close>
       <el-form :model="data.form" rules="rules" ref="formRef" label-width="100px" style="padding-right: 50px">
         <el-form-item label="学生姓名">
           <el-input v-model="data.form.name" autocomplete="off" />
@@ -63,42 +67,10 @@
         <el-form-item label="生日">
           <el-date-picker style="width: 100%" type="date" format="YYYY-MM-DD" value-format="YYYY-MM-DD" v-model="data.form.birth"></el-date-picker>
         </el-form-item>
-      </el-form>
-      <template #footer>
-        <span class="dialog-footer">
-          <el-button @click="data.formVisible = false">取 消</el-button>
-          <el-button type="primary" @click="save">保 存</el-button>
-        </span>
-      </template>
-    </el-dialog>
-
-//    编辑的弹窗
-    <el-dialog title="学生信息" width="40%" v-model="data.editVisible">
-      <el-form :model="data.form" label-width="100px" style="padding-right: 50px">
-        <el-form-item label="学生姓名">
-          <el-input v-model="data.form.name" autocomplete="off" />
-        </el-form-item>
-        <el-form-item label="用户名">
-          <el-input v-model="data.form.username" autocomplete="off" />
-        </el-form-item>
-        <el-form-item label="学生密码">
-          <el-input v-model="data.form.password" autocomplete="off" />
-        </el-form-item>
-        <el-form-item label="学生手机">
-          <el-input v-model="data.form.phone" autocomplete="off" />
-        </el-form-item>
-        <el-form-item label="学生邮箱">
-          <el-input v-model="data.form.email" autocomplete="off" />
-        </el-form-item>
-        <el-form-item label="性别">
-          <el-radio-group v-model="data.form.sex">
-            <el-radio label="男"></el-radio>
-            <el-radio label="女"></el-radio>
-            <el-radio label="其他"></el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="生日">
-          <el-date-picker style="width: 100%" type="date" format="YYYY-MM-DD" value-format="YYYY-MM-DD" v-model="data.form.birth"></el-date-picker>
+        <el-form-item label="学生头像">
+          <el-upload action="http://localhost:8080/files/upload" list-type="picture" :on-success="handleImgUploadSuccess">
+            <el-button type="primary">上传头像</el-button>
+          </el-upload>
         </el-form-item>
       </el-form>
       <template #footer>
@@ -108,9 +80,6 @@
         </span>
       </template>
     </el-dialog>
-
-
-
   </div>
 </template>
 
@@ -133,7 +102,7 @@ const data = reactive({
   tableData: [],
   total: 0,
   pageNum: 1,//当前页码
-  pageSize: 10,//每页显示多少条
+  pageSize: 5,//每页显示多少条
   name: '',
   username: '',
 })
@@ -203,7 +172,7 @@ const handleAdd = () => {
 //编辑界面唤醒
 const handleEdit = (row) => {
   data.form = JSON.parse(JSON.stringify(row))   //深拷贝,弹窗显示行数据
-  data.editVisible = true
+  data.formVisible = true
 }
 
 //删除操作
@@ -232,7 +201,7 @@ const save = () => {
     if (valid) {
       request.request({
         url: data.form.id ? baseUrl + '/update' : baseUrl + '/add',
-        method: data.form.id? 'PUT' : 'POST',
+        method: data.form.id ? 'PUT' : 'POST',
         data: data.form,
       }).then(res => {
         if (res.code === "200") {
@@ -246,4 +215,11 @@ const save = () => {
     }
   })
 }
+
+
+const handleImgUploadSuccess = (res) => {
+  console.log(res)
+  data.form.avatar = res.data
+}
+
 </script>

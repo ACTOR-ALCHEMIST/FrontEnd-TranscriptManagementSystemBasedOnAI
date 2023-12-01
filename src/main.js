@@ -9,6 +9,8 @@ import '@/assets/css/global.css'
 
 const app = createApp(App)
 
+
+
 app.use(router)
 app.use(ElementPlus, {
     locale: zhCn,
