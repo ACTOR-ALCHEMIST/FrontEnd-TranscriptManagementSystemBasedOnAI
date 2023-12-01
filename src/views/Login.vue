@@ -43,7 +43,7 @@ const data = reactive({
   form: { role: 'STUDENT' }
 })
 
-const rules = {
+const rules = reactive({
   username: [
     {
       required: true,
@@ -58,7 +58,7 @@ const rules = {
       trigger: 'blur'
     }
   ]
-}
+})
 
 const login = () => {
   // 确保提供了用户名和密码
@@ -97,13 +97,14 @@ const login = () => {
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: #11A983;
 }
 
 .login-box {
-  width: 400px;
-  height: 400px;
   background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 30px;
 }
 </style>

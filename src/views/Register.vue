@@ -8,6 +8,9 @@
             <el-input prefix-icon="User" v-model="data.form.username" placeholder="请输入用户名"></el-input>
           </el-form-item>
           <el-form-item>
+            <el-input prefix-icon="Iphone" v-model="data.form.phone" placeholder="请输入手机号"></el-input>
+          </el-form-item>
+          <el-form-item>
             <el-input prefix-icon="lock" type="password" v-model="data.form.password" placeholder="请输入密码"></el-input>
           </el-form-item>
           <el-form-item>
