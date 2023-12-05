@@ -33,7 +33,7 @@
                       @current-change="handleCurrentChange"
                       background layout="prev, pager, next" :total="data.total"/>
     </div>
-//添加的弹窗
+    //添加的弹窗
     <el-dialog title="课程信息" width="40%" v-model="data.formVisible">
       <el-form :model="data.form" label-width="100px" style="padding-right: 50px">
         <el-form-item label="课程名称">
@@ -60,7 +60,7 @@
       </template>
     </el-dialog>
 
-//    编辑的弹窗
+    //    编辑的弹窗
     <el-dialog title="课程信息" width="40%" v-model="data.editVisible">
       <el-form :model="data.form" label-width="100px" style="padding-right: 50px">
         <el-form-item label="课程名称">
@@ -162,19 +162,19 @@ const handleEdit = (row) => {
 //删除操作
 const handleDelete = (id) => {
   ElMessageBox.confirm('删除后不可恢复，确定删除吗？', '删除确认',{ type: 'warning'}).then(res => {
-  request.delete('/course/delete/' + id).then(res => {
-    if (res.code === "200") {
-      load()    //刷新数据
-      ElMessage.success('删除成功')
-    }else {
-      ElMessage.error(res.msg)
-    }
-  })
+    request.delete('/course/delete/' + id).then(res => {
+      if (res.code === "200") {
+        load()    //刷新数据
+        ElMessage.success('删除成功')
+      }else {
+        ElMessage.error(res.msg)
+      }
+    })
   }).catch(res => {
-      ElMessage.error({
+    ElMessage.error({
       type: 'info',
       message: '已取消删除',
-      })
+    })
   })
 
 }
