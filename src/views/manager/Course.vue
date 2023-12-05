@@ -196,5 +196,4 @@ const save = () => {
   })
   console.log(data.form)
 }
-
 </script>
