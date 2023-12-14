@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="card" style="width: 50%; padding: 40px">
+    <div class="card" style="width: 75%; padding: 40px">
     <el-form :model="data.form" ref="formRef" label-width="100px" style="padding-right: 50px">
       <el-form-item label="学生头像">
         <el-upload style="width: 120px; height: 120px;"

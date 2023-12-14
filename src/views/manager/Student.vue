@@ -22,7 +22,7 @@
         <el-table-column label="生日" prop="birth"></el-table-column>
         <el-table-column label="头像" prop="avatar">
           <template #default="scope">
-            <el-image v-if="scope.row.avatar" :src="scope.row.avatar" fit="cover" style="width: 40px; height: 40px; border-radius: 5px"></el-image>
+            <el-image v-if="scope.row.avatar" :src="scope.row.avatar" fit="cover" style="width: 75px; height: 75px; border-radius: 5px"></el-image>
           </template>
         </el-table-column>
         <el-table-column label="操作" align="center" width="160">
