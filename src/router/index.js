@@ -18,6 +18,7 @@ const router = createRouter({
         { path: 'grade', name: 'Grade', component: () => import('@/views/manager/Grade.vue')},
         { path: 'blog', name: 'blog', component: () => import('@/views/manager/Blog.vue')},
         { path: '/Article/:id', name: 'Article', component: () => import('@/views/manager/Article.vue') },
+        { path: 'gemini', name: 'Gemini', component: () => import('@/views/ai/Gemini.vue') },
 
       ]
     },

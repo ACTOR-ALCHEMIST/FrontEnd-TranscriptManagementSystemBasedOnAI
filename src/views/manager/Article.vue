@@ -2,83 +2,42 @@
   <div>
     <h1>Article {{ articleList.title }}</h1>
     <p>ID: {{ articleList.content }}</p>
-    <p v-for="item in articleList.comments" :key="item.id">
-      内容: {{ item.content }}
-      <br>
-      作者: {{ item.author }}
-      <br>
-      时间: {{ item.created }}
+    <p>
+      <button  @click="load">Load</button>
     </p>
     <!-- 其他组件内容 -->
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 import request from "@/utils/request";
 import axios from 'axios';
 
-const userId = ref('');
-const route = useRoute();
-const articleList = ref('');
-
-onMounted(() => {
-  // 使用 route.params.id 获取路由参数 id
-  userId.value = route.params.id;
-  load(userId.value);
-  // 在这里可以根据 userId 请求相应的数据
-  // 例如：request.get(`/blog/${userId.value}`).then(response => { /* 处理数据 */ });
-});
+const API_KEY = "AIzaSyAULR2QicZ4md1FaE2kZ0Iynj5L8o7hNXw";
+const { GoogleGenerativeAI } = require("@google/generative-ai");
+// Access your API key as an environment variable (see "Set up your API key" above)
+const genAI = new GoogleGenerativeAI(process.env.API_KEY);
+const model = genAI.getGenerativeModel({ model: "gemini-pro"});
 
 
 
+const load = () => {
+  // For text-only input, use the gemini-pro model
+  async function run() {
+    // For text-only input, use the gemini-pro model
+    const model = genAI.getGenerativeModel({ model: "gemini-pro"});
 
-// const getArticleById = (id) => {
-//   axios.get('/blog/getArticleById', {
-//     params: {
-//       id: id,
-//     }
-//   })
-//       .then(response => {
-//         const res = response.data;
-//         if (res.code === 200) {
-//           // 请求成功，处理返回的文章数据
-//           const article = res.data;
-//           console.log(article);
-//         } else {
-//           // 请求失败，处理错误信息
-//           console.error('请求失败：', res.message);
-//         }
-//       })
-//       .catch(error => {
-//         console.error('请求出错：', error);
-//       });
-// };
-// getArticleById(userId.value)
+    const prompt = "Write a story about a magic backpack."
 
-const load = (id) => {
-  request.get('/blog/getArticleById', {
-    params: {
-      id: id,
-    },
-  }) .then(response => {
-   console.log(response.code==="200")
-        const res = response;
-        if (res.code === "200") {
-          // 请求成功，处理返回的文章数据
-        articleList.value = res.data;
-          console.log("输出：",article);
-        } else {
-          // 请求失败，处理错误信息
-          console.error('请求失败：', res.message);
-        }
-      })
-      .catch(error => {
-        console.error('请求出错：', error);
-      });
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+    const text = response.text();
+    console.log(text);
+  }
+
+  run();
 };
-//获取数据
-console.log("测试：",userId.value);
 
 </script>

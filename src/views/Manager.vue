@@ -71,6 +71,10 @@
             <el-icon><User /></el-icon>
             <span>个人资料</span>
           </el-menu-item>
+          <el-menu-item index="/gemini">
+            <el-icon><User /></el-icon>
+            <span>Gemini</span>
+          </el-menu-item>
           <el-menu-item index="login" @click="logout">
             <el-icon><SwitchButton /></el-icon>
             <span>退出系统</span>
